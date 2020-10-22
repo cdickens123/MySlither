@@ -13,6 +13,9 @@ import javax.swing.*;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 import javax.swing.table.DefaultTableCellRenderer;
+import java.lang.*;
+import java.util.*;
+
 
 
 final class MySlitherJFrame extends JFrame {
@@ -87,6 +90,9 @@ final class MySlitherJFrame extends JFrame {
 
     // TODO: skins, prey-size, snake-length/width, bot-layer, that-other-thing(?), show ping
 
+
+    HashMap<String,String> colors = new HashMap<String,String>();
+    //a hash map to store all the colours the use can pick and their associated hex values
     private final JTextField server, name;
     private final JComboBox<String> snake;
     private final JCheckBox useRandomServer;
@@ -97,6 +103,8 @@ final class MySlitherJFrame extends JFrame {
     private final JScrollBar logScrollBar;
     private final JTable highscoreList;
     private final MySlitherCanvas canvas;
+    public String selectedUserSnakeColor;
+    //stores the value of the color the user wants their snake to be
 
     private final long startTime;
     private final Timer updateTimer;
@@ -128,9 +136,6 @@ final class MySlitherJFrame extends JFrame {
 
         getContentPane().setLayout(new BorderLayout());
 
-        canvas = new MySlitherCanvas(this);
-        player = canvas.mouseInput;
-
         // === upper row ===
         JPanel settings = new JPanel(new GridBagLayout());
 
@@ -141,16 +146,27 @@ final class MySlitherJFrame extends JFrame {
         snake = new JComboBox<>(SNAKES);
         snake.setMaximumRowCount(snake.getItemCount());
 
-        useRandomServer = new JCheckBox("use random server", true);
-        useRandomServer.addActionListener(a -> {
-            setStatus(null);
-        });
+        colors.put("purple","#000080");
+        colors.put("blue","#0000ff");
+        colors.put("cyan","#00ffff");
+        colors.put("green","#008000");
+        colors.put("yellow","#ffff00");
+        colors.put("orange","#ffa500");
+        colors.put("salmon","#fa8072");
+        colors.put("red","#ff0000");
+        colors.put("violet","#ee82ee");
+        //populating the hashmap with available colours and associated hex values
 
         connect = new JToggleButton();
         connect.addActionListener(a -> {
             switch (status) {
                 case DISCONNECTED:
                     connect();
+                    //when the user has pressed the select button we store the value in the combo box
+                    selectedUserSnakeColor = (String) snake.getSelectedItem();
+                    selectedUserSnakeColor = selectedUserSnakeColor.substring(5);
+                    selectedUserSnakeColor = colors.get(selectedUserSnakeColor);
+                    //convert the string word version of the color into a hex string using the hashmap
                     break;
                 case CONNECTING:
                 case CONNECTED:
@@ -160,6 +176,15 @@ final class MySlitherJFrame extends JFrame {
                     break;
             }
         });
+
+       canvas = new MySlitherCanvas(this);
+       player = canvas.mouseInput;
+        useRandomServer = new JCheckBox("use random server", true);
+        useRandomServer.addActionListener(a -> {
+            setStatus(null);
+        });
+
+        
         connect.addAncestorListener(new AncestorListener() {
             @Override
             public void ancestorAdded(AncestorEvent event) {

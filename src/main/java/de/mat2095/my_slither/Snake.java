@@ -14,8 +14,10 @@ class Snake {
     private double fam;
     final Deque<SnakeBodyPart> body;
     private final MySlitherModel model;
+    public String color;
+    //the snake now has a color variable which is set in the constructor
 
-    Snake(int id, String name, double x, double y, double wang, double ang, double sp, double fam, Deque<SnakeBodyPart> body, MySlitherModel model) {
+    Snake(int id, String name, double x, double y, double wang, double ang, double sp, double fam, Deque<SnakeBodyPart> body, MySlitherModel model, String color) {
         this.id = id;
         this.name = name;
         this.x = x;
@@ -28,6 +30,7 @@ class Snake {
         this.fam = fam;
         this.body = body;
         this.model = model;
+        this.color = color;
     }
 
     private double getSc() {

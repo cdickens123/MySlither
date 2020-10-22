@@ -198,7 +198,20 @@ final class MySlitherCanvas extends JPanel {
             model.snakes.values().forEach(snake -> {
                 double thickness = 16 + snake.body.size() / 4.0;
                 if (snake.body.size() >= 2) {
-                    g.setColor(snake == model.snake ? OWN_SNAKE_BODY_COLOR : SNAKE_BODY_COLOR);
+                    
+                    if (snake == model.snake){
+                        //sets the color of the user's snake
+                        try{
+                            g.setColor(Color.decode(snake.color));
+                            //ensures they have picked a color we currently support
+                        }
+                        catch(NullPointerException e){
+                            g.setColor(SNAKE_BODY_COLOR);
+                        }
+                    } else{
+                        g.setColor(SNAKE_BODY_COLOR);
+                    }
+
                     g.setStroke(new BasicStroke((float) thickness, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 
                     double totalLength = 0; // TODO: respect FAM, ???
@@ -240,7 +253,21 @@ final class MySlitherCanvas extends JPanel {
                         snake == model.snake ? OWN_SNAKE_HALO_COLORS : SNAKE_HALO_COLORS));
                     g.fillRect((int) Math.round(snake.x - thickness * 3 / 2 - 1), (int) Math.round(snake.y - thickness * 3 / 2 - 1), (int) (thickness * 3 + 2), (int) (thickness * 3 + 2));
                 }
-                g.setColor(snake == model.snake ? OWN_SNAKE_COLOR : SNAKE_COLOR);
+               // g.setColor(snake == model.snake ? Color.decode(snake.color) : SNAKE_COLOR);
+
+                    if (snake == model.snake){
+                        //sets the color of the user's snake
+                        try{
+                            g.setColor(Color.decode(snake.color));
+                            //ensures they have picked a color we currently support
+                        }
+                        catch(NullPointerException e){
+                            g.setColor(SNAKE_BODY_COLOR);
+                        }
+                    } else{
+                        g.setColor(SNAKE_BODY_COLOR);
+                    }
+
                 g.fill(new Ellipse2D.Double(snake.x - thickness * 2 / 3, snake.y - thickness * 2 / 3, thickness * 4 / 3, thickness * 4 / 3));
 
                 String lengthText = "" + model.getSnakeLength(snake.body.size(), snake.getFam());
