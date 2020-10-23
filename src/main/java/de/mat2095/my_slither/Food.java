@@ -7,13 +7,37 @@ class Food {
     private final double size;
     private final double rsp;
     private final long spawnTime;
+    private int color;
+    private static final int food_colours[] = {
+        0x000080,
+        0x0000ff,
+       0x00ffff,
+        0x008000,
+        0xffff00,
+        0xffa500,
+        0xfa8072,
+        0xff0000,
+        0xee82ee,
+        0xbfff00,
+        0xbfff00,
+        0xbfff00,
+        0xbfff00,
+};
 
-    Food(int x, int y, double size, boolean fastSpawn) {
+    Food(int x, int y, double size, boolean fastSpawn, int colorIndex) {
+        //System.out.println("h");
+        //System.out.println(colorIndex);
         this.x = x;
         this.y = y;
         this.size = size;
         this.rsp = fastSpawn ? 4 : 1;
         spawnTime = System.currentTimeMillis();
+        this.color = food_colours[colorIndex];
+    }
+
+    int getColor()
+    {
+        return color;
     }
 
     double getSize() {
