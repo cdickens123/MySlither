@@ -347,6 +347,7 @@ final class MySlitherWebSocketClient extends WebSocketClient {
     }
 
     private double getNewSpeed(int speed) {
+        // reduce constant to increases speed of snakes
         return speed / 18.0;
     }
 

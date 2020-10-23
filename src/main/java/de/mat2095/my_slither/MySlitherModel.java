@@ -27,6 +27,8 @@ class MySlitherModel {
 
     private final MySlitherJFrame view;
 
+    private double movementNoise;
+
     Snake snake;
 
     MySlitherModel(int gameRadius, int sectorSize, double spangdv, double nsp1, double nsp2, double nsp3, double mamu1, double mamu2, double cst, int mscps, MySlitherJFrame view) {
@@ -122,8 +124,17 @@ class MySlitherModel {
                     cSnake.ang = cSnake.wang;
                 }
 
+                cSnake.ang = cSnake.ang + (Math.sin((movementNoise / 180) * Math.PI));
+
                 cSnake.x += Math.cos(cSnake.ang) * snakeDistance;
                 cSnake.y += Math.sin(cSnake.ang) * snakeDistance;
+
+                movementNoise = movementNoise + 1;
+
+                if (movementNoise <= 360)
+                {
+                    movementNoise = 0;
+                }
             });
 
             // TODO: eahang
