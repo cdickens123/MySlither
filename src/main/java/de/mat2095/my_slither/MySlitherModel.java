@@ -207,9 +207,9 @@ class MySlitherModel {
         }
     }
 
-    void addFood(int x, int y, double size, boolean fastSpawn, int color) {
+    void addFood(int x, int y, double size, boolean fastSpawn) {
         synchronized (view.modelLock) {
-            foods.put(y * gameRadius * 3 + x, new Food(x, y, size, fastSpawn, color));
+            foods.put(y * gameRadius * 3 + x, new Food(x, y, size, fastSpawn));
         }
     }
 
